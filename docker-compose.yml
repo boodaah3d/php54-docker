@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=example
+      - MYSQL_USER=db_user
+      - MYSQL_PASSWORD=secret
+    ports:
+      - 8806:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+  web:
+    build:
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+    ports:
+      - 8880:80
+    volumes:
+      - ./public:/var/www/html
